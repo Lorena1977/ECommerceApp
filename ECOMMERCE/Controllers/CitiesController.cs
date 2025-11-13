@@ -1,4 +1,7 @@
-﻿using System;
+﻿using ECOMMERCE.Clases;
+using ECOMMERCE.Migrations;
+using ECOMMERCE.Models;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
@@ -6,7 +9,6 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
-using ECOMMERCE.Models;
 
 namespace ECOMMERCE.Controllers
 {
@@ -36,19 +38,30 @@ namespace ECOMMERCE.Controllers
             return View(city);
         }
 
-        // GET: Cities/Create
+        // GET: Cities/Create. Se llama cuando voy al botón "Nuevo". Pinta el formulario.
+        //---------------------------------------------------------
         public ActionResult Create()
         {
-            ViewBag.DepartmentId = new SelectList(
-                db.Departments.OrderBy(d => d.Name), //Ordena la lista por el nombre del departamento
+            //var departments = db.Departments.ToList(); //Creo un objeto local
+            ////Adiciono un nuevo departamento
+            //departments.Add(new Department
+            //{
+            //    DepartmentId = 0,
+            //    Name = "[Select a department...]", //Lo meto entre corchetes para que vaya el primero en el combobox
+            //});
+
+            //departments = departments.OrderBy(d => d.Name).ToList(); //Ordeno los departamentos.
+
+            ViewBag.DepartmentId = new SelectList( //ViewBag sirve para manejar datos desde el controlador a la vista
+                 ComboHelper.GetDepartments(), //Devuelve la lista de departamentos Ordenada por Nombre
                 "DepartmentId",
-                "Name");
+                "Name"); //Muestra el atributo Name
             return View();
         }
 
         // POST: Cities/Create
-        // Para protegerse de ataques de publicación excesiva, habilite las propiedades específicas a las que quiere enlazarse. Para obtener 
-        // más detalles, vea https://go.microsoft.com/fwlink/?LinkId=317598.
+        // Crea la ciudad una vez ya tiene los datos cumplimentados.
+        //----------------------------------------------------------
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "CityId,Name,DepartmentId")] City city)
@@ -56,12 +69,29 @@ namespace ECOMMERCE.Controllers
             if (ModelState.IsValid)
             {
                 db.Cities.Add(city);
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                try
+                {
+                    db.SaveChanges();
+                    return RedirectToAction("Index");
+                }
+                catch (Exception ex)
+                {
+                    if (ex.InnerException != null &&
+                        ex.InnerException.InnerException != null &&
+                        ex.InnerException.InnerException.Message.Contains("REFERENCE"))
+                    {
+                        ModelState.AddModelError(string.Empty, "The record can't be deleted because it has related records");
+                    }
+                    else
+                    {
+                        ModelState.AddModelError(string.Empty, ex.Message);
+                    }
+                }
+                return View(city);
             }
 
             ViewBag.DepartmentId = new SelectList(
-                db.Departments.OrderBy( d=> d.Name), //Ordena la lista por el nombre del departamento
+                ComboHelper.GetDepartments(), //Ordena la lista por el nombre del departamento
                 "DepartmentId",
                 "Name",
                  city.DepartmentId);
@@ -81,7 +111,7 @@ namespace ECOMMERCE.Controllers
                 return HttpNotFound();
             }
             ViewBag.DepartmentId = new SelectList(
-                 db.Departments.OrderBy(d => d.Name), //Ordena la lista por el nombre del departamento
+                ComboHelper.GetDepartments(), //Ordena la lista por el nombre del departamento
                 "DepartmentId",
                 "Name", city.DepartmentId);
             return View(city);
@@ -97,11 +127,28 @@ namespace ECOMMERCE.Controllers
             if (ModelState.IsValid)
             {
                 db.Entry(city).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                try
+                {
+                    db.SaveChanges();
+                    return RedirectToAction("Index");
+                }
+                catch (Exception ex)
+                {
+                    if (ex.InnerException != null &&
+                        ex.InnerException.InnerException != null &&
+                        ex.InnerException.InnerException.Message.Contains("REFERENCE"))
+                    {
+                        ModelState.AddModelError(string.Empty, "The record can't be deleted because it has related records");
+                    }
+                    else
+                    {
+                        ModelState.AddModelError(string.Empty, ex.Message);
+                    }
+                }
+                return View(city);
             }
             ViewBag.DepartmentId = new SelectList(
-                 db.Departments.OrderBy(d => d.Name), //Ordena la lista por el nombre del departamento
+                 ComboHelper.GetDepartments(), //Ordena la lista por el nombre del departamento
                 "DepartmentId",
                 "Name", 
                 city.DepartmentId);
@@ -130,8 +177,25 @@ namespace ECOMMERCE.Controllers
         {
             City city = db.Cities.Find(id);
             db.Cities.Remove(city);
-            db.SaveChanges();
-            return RedirectToAction("Index");
+            try
+            {
+                db.SaveChanges();
+                return RedirectToAction("Index");
+            }
+            catch (Exception ex)
+            {
+                if (ex.InnerException != null &&
+                    ex.InnerException.InnerException != null &&
+                    ex.InnerException.InnerException.Message.Contains("REFERENCE"))
+                {
+                    ModelState.AddModelError(string.Empty, "The record can't be deleted because it has related records");
+                }
+                else
+                {
+                    ModelState.AddModelError(string.Empty, ex.Message);
+                }
+            }
+            return View(city);
         }
 
         protected override void Dispose(bool disposing)

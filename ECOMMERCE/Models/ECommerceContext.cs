@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Data.Entity.ModelConfiguration.Conventions;
 using System.Linq;
 using System.Web;
 
@@ -20,5 +21,12 @@ namespace ECOMMERCE.Models
         public DbSet<ECOMMERCE.Models.Department> Departments { get; set; }//Modelo que estamos mandando a base de datos
 
         public System.Data.Entity.DbSet<ECOMMERCE.Models.City> Cities { get; set; }
+
+        protected override void OnModelCreating(DbModelBuilder modelBuilder) //Para impedir el borrado en cascada (departamento con registros relacionados)
+        {
+            modelBuilder.Conventions.Remove<OneToManyCascadeDeleteConvention>();
+        }
+
+        public System.Data.Entity.DbSet<ECOMMERCE.Models.Company> Companies { get; set; }
     }
 }
