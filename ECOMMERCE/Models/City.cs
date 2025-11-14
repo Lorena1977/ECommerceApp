@@ -14,16 +14,21 @@ namespace ECOMMERCE.Models
         public int CityId { get; set; }
 
         [Required(ErrorMessage = "The field {0} is required")] //El nombre es un campo obligatorio
-        [MaxLength(50, ErrorMessage = "The field {0} must be maximun {1} characters length")] //Longitud del campo
-        
+        [MaxLength(50, ErrorMessage = "The field {0} must be maximun {1} characters length")] //Longitud del campo       
         [Display(Name = "City")] //Que muestre el literal "City".
-        [Index("City_Name_Index", 2, IsUnique = true)] //Hacemos un indice compuesto para poder hacer ciudades iguales para departamentos diferentes
+        [Index("City_Name_Index", 2, IsUnique = true)] //Hacemos un indice compuesto para poder hacer ciudades iguales
+                                                       //para departamentos diferentes
         public string Name { get; set; }
 
+
         [Required(ErrorMessage = "The field {0} is required")]
-        [Range(1, double.MaxValue, ErrorMessage = "You must select a {0}")] //Para que obligue a cumplimentar un departamento cuando cree una ciudad.
+        [Range(1, double.MaxValue, ErrorMessage = "You must select a {0}")] //Para que obligue a cumplimentar un departamento
+                                                                            //cuando cree una ciudad.
         public int DepartmentId { get; set; }
-        public virtual Department Department { get; set; }
+
+        public virtual Department Department { get; set; } //Crea la relación de varias ciudades 1 Departamento.
+
+
         public virtual ICollection<Company> Companies { get; set; } //Una ciudad tiene muchas compañías.
         public virtual ICollection<User> Users { get; set; }//Una ciudad tiene muchos usuarios
     }

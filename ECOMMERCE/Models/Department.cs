@@ -13,12 +13,15 @@ namespace ECOMMERCE.Models
         [Key] //Le dice que el DepartamentoID es la clave de la tabla
         public int DepartmentId { get; set; }
 
+        //Incluimos DataNotations al campo Nombre.
         [Required(ErrorMessage = "The field {0} is required")] //El nombre es un campo obligatorio
         [MaxLength(50, ErrorMessage = "The field {0} must be maximun {1} characters length")] //Longitud del campo
         [Display(Name = "Department")] //Que muestre el literal "Department".
-        [Index("Department_Name_Index", IsUnique = true)] //que el nombre sea único en la tabla Departamentos
+        [Index("Department_Name_Index", IsUnique = true)] //que el nombre sea un íncide único en la tabla Departamentos
         public string Name { get; set; }
-        public virtual ICollection<City> Cities { get; set; } //ICollection: Implementación de una Interface. Un departamente tiene varias Cities. (relación uno a muchos)
+        public virtual ICollection<City> Cities { get; set; } //ICollection: Implementación de una Interface. Un departamento
+                                                              //tiene varias Cities. (relación uno a muchos)
+       
         public virtual ICollection<Company> Companies { get; set; }
         public virtual ICollection<User> Users { get; set; }
 

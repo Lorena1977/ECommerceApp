@@ -20,7 +20,7 @@ namespace ECOMMERCE.Models
         public string Name { get; set; }
 
         [Required(ErrorMessage = "The field {0} is required")] //El nombre es un campo obligatorio
-        [MaxLength(50, ErrorMessage = "The field {0} must be maximun {1} characters length")] //Longitud del campo
+        [MaxLength(20, ErrorMessage = "The field {0} must be maximun {1} characters length")] //Longitud del campo
         [DataType(DataType.PhoneNumber)]
         public string Phone { get; set; }
 
@@ -44,7 +44,7 @@ namespace ECOMMERCE.Models
         public HttpPostedFileBase LogoFile { get; set; }
 
         //Definimos las relaciones entre los campos.
-        public virtual Department Deparment { get; set; }
+        public virtual Department Deparment { get; set; } //Relacionada con los departamentos
         public virtual City City { get; set; }
         public virtual ICollection<User> Users { get; set; }
     }

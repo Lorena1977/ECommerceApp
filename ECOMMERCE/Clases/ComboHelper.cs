@@ -9,7 +9,8 @@ namespace ECOMMERCE.Clases
     public class ComboHelper : IDisposable
     {
         private static ECommerceContext db = new ECommerceContext();
-        public static List<Department> GetDepartments() //Devuelve lo que tenemos en el citiesController para departamentos
+        public static List<Department> GetDepartments() //Devuelve una lista de departamentos ordenada alfabeticamente.
+                                                        //Devuelve lo que tenemos en el CitiesController
         {
             var departments = db.Departments.ToList();
             departments.Add(new Department
@@ -21,7 +22,8 @@ namespace ECOMMERCE.Clases
         }
 
 
-        public static List<City> GetCities() //Devuelve lo que hay en cities
+        //Devuelve una lista de las ciudades ordenada alfabéticamente.
+        public static List<City> GetCities() 
         {
             var cities = db.Cities.ToList();
             cities.Add(new City
@@ -44,7 +46,7 @@ namespace ECOMMERCE.Clases
         }
         public void Dispose()
         {
-            db.Dispose(); 
+            db.Dispose(); //Nos cierra la conexión con la base de datos.
         }
     }
 }

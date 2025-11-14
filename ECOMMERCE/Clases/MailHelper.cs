@@ -12,6 +12,7 @@ namespace ECOMMERCE.Clases
     public class MailHelper
     {
         //Son Asincronos porque no quiero esperar a que me llegue respuesta.
+        //Método que envía un correo con destinatario, cuerpo y el subject.
         public static async Task SendMail(string to, string subject, string body)
         {
             var message = new MailMessage();
@@ -37,6 +38,7 @@ namespace ECOMMERCE.Clases
             }
         }
 
+        //Método que envía una lista de correos.
         public static async Task SendMail(List<string> mails, string subject, string body)
         {
             var message = new MailMessage();

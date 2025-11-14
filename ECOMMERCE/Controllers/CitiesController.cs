@@ -39,22 +39,12 @@ namespace ECOMMERCE.Controllers
         }
 
         // GET: Cities/Create. Se llama cuando voy al botón "Nuevo". Pinta el formulario.
-        //---------------------------------------------------------
+        //------------------------------------------------------------------------------
         public ActionResult Create()
-        {
-            //var departments = db.Departments.ToList(); //Creo un objeto local
-            ////Adiciono un nuevo departamento
-            //departments.Add(new Department
-            //{
-            //    DepartmentId = 0,
-            //    Name = "[Select a department...]", //Lo meto entre corchetes para que vaya el primero en el combobox
-            //});
-
-            //departments = departments.OrderBy(d => d.Name).ToList(); //Ordeno los departamentos.
-
-            ViewBag.DepartmentId = new SelectList( //ViewBag sirve para manejar datos desde el controlador a la vista
+        {          
+            ViewBag.DepartmentId = new SelectList(//ViewBag sirve para conectar datos desde el controlador a la vista
                  ComboHelper.GetDepartments(), //Devuelve la lista de departamentos Ordenada por Nombre
-                "DepartmentId",
+                "DepartmentId",//Guarda el DepartmentId
                 "Name"); //Muestra el atributo Name
             return View();
         }

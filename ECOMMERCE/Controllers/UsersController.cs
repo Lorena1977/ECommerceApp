@@ -54,6 +54,7 @@ namespace ECOMMERCE.Controllers
             {
                 db.Users.Add(user);
                 db.SaveChanges();
+                UserHelper.CreateUserASP(user.UserName, "User"); //Creamos el usuario como User.
 
                 if (user.PhotoFile != null) //Si tiene foto, que suba la foto en la carpeta.
                 {

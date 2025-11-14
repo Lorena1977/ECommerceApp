@@ -17,18 +17,17 @@ namespace ECOMMERCE.Models
         {
               
         }
-
-        public DbSet<ECOMMERCE.Models.Department> Departments { get; set; }//Modelo que estamos mandando a base de datos
+        //Modelos que estamos mandando a la base de datos
+        public DbSet<ECOMMERCE.Models.Department> Departments { get; set; }
 
         public System.Data.Entity.DbSet<ECOMMERCE.Models.City> Cities { get; set; }
-
-        protected override void OnModelCreating(DbModelBuilder modelBuilder) //Para impedir el borrado en cascada (departamento con registros relacionados)
+        
+        //Para impedir el borrado en cascada (departamento con registros relacionados)
+        protected override void OnModelCreating(DbModelBuilder modelBuilder) 
         {
             modelBuilder.Conventions.Remove<OneToManyCascadeDeleteConvention>();
         }
-
         public System.Data.Entity.DbSet<ECOMMERCE.Models.Company> Companies { get; set; }
-
         public System.Data.Entity.DbSet<ECOMMERCE.Models.User> Users { get; set; }
     }
 }
