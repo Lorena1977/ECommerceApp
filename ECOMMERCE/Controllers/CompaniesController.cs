@@ -53,10 +53,11 @@ namespace ECOMMERCE.Controllers
         public ActionResult Create(Company company)
         {
             if (ModelState.IsValid)
-            {               
-                db.Companies.Add(company);
-                db.SaveChanges();
-                            
+            {              
+                    db.Companies.Add(company);
+                    db.SaveChanges();
+             
+
                 if (company.LogoFile != null) //Si tiene logo, que suba la foto en la carpeta.
                 {
                     var folder = "~/Content/Logos";

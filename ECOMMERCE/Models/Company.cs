@@ -28,6 +28,7 @@ namespace ECOMMERCE.Models
         [MaxLength(100, ErrorMessage = "The field {0} must be maximun {1} characters length")] //Longitud del campo
         public string Address { get; set; }
 
+
         [DataType(DataType.ImageUrl)]
         public string Logo { get; set; }
 

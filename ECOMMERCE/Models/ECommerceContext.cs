@@ -28,5 +28,7 @@ namespace ECOMMERCE.Models
         }
 
         public System.Data.Entity.DbSet<ECOMMERCE.Models.Company> Companies { get; set; }
+
+        public System.Data.Entity.DbSet<ECOMMERCE.Models.User> Users { get; set; }
     }
 }

@@ -64,7 +64,7 @@ namespace ECOMMERCE.Controllers
         //----------------------------------------------------------
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "CityId,Name,DepartmentId")] City city)
+        public ActionResult Create(City city)
         {
             if (ModelState.IsValid)
             {
@@ -122,7 +122,7 @@ namespace ECOMMERCE.Controllers
         // más detalles, vea https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "CityId,Name,DepartmentId")] City city)
+        public ActionResult Edit(City city)
         {
             if (ModelState.IsValid)
             {

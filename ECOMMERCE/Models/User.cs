@@ -13,6 +13,7 @@ namespace ECOMMERCE.Models
         [Key] //Le dice que el UserID es la clave de la tabla
         public int UserId { get; set; }
 
+
         [Required(ErrorMessage = "The field {0} is required")] //El nombre es un campo obligatorio
         [MaxLength(50, ErrorMessage = "The field {0} must be maximun {1} characters length")] //Longitud del campo
         [Display(Name = "First Name")] //Que muestre el literal "First Name".
@@ -24,39 +25,47 @@ namespace ECOMMERCE.Models
         [Display(Name = "Last Name")] //Que muestre el literal "First Name".
         public string LastName { get; set; }
 
+
         [Required(ErrorMessage = "The field {0} is required")] //El nombre es un campo obligatorio
         [MaxLength(256, ErrorMessage = "The field {0} must be maximun {1} characters length")] //Longitud del campo
         [Display(Name = "E-Mail")] //Que muestre el literal "First Name".
-        [Index("User_UserName_Index", IsUnique = true)]
+        [Index("User_UserName_Index", 2, IsUnique = true)] //No permite dos correos con el mismo nombre
         [DataType(DataType.EmailAddress)]
         public string UserName { get; set; }
+
      
         [Required(ErrorMessage = "The field {0} is required")] //El nombre es un campo obligatorio
         [MaxLength(50, ErrorMessage = "The field {0} must be maximun {1} characters length")] //Longitud del campo
         [DataType(DataType.PhoneNumber)]
         public string Phone { get; set; }
 
+
         [Required(ErrorMessage = "The field {0} is required")] //El nombre es un campo obligatorio
         [MaxLength(100, ErrorMessage = "The field {0} must be maximun {1} characters length")] //Longitud del campo
         public string Address { get; set; }
 
+
         [DataType(DataType.ImageUrl)]
         public string Photo { get; set; }
+
 
         [Required(ErrorMessage = "The field {0} is required")] //El nombre es un campo obligatorio
         [Range(1, double.MaxValue, ErrorMessage = "You must select a {0}")]
         [Display(Name ="Department")]
         public int DepartmentId { get; set; }
 
+
         [Required(ErrorMessage = "The field {0} is required")] //El nombre es un campo obligatorio
         [Range(1, double.MaxValue, ErrorMessage = "You must select a {0}")]
         [Display(Name = "City")]
         public int CityId { get; set; }
 
+
         [Required(ErrorMessage = "The field {0} is required")] //El nombre es un campo obligatorio
         [Range(1, double.MaxValue, ErrorMessage = "You must select a {0}")]
         [Display(Name = "Company")]
         public int CompanyId { get; set; }
+
 
         //Vamos a crear una propiedad de lectura para concatenar nombre y apellidos.
         [Display(Name = "User")]
