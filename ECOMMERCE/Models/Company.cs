@@ -47,5 +47,10 @@ namespace ECOMMERCE.Models
         public virtual Department Deparment { get; set; } //Relacionada con los departamentos
         public virtual City City { get; set; }
         public virtual ICollection<User> Users { get; set; }
+        public virtual ICollection<Category> Categories { get; set; }
+        public virtual ICollection<Tax> Taxes { get; set; }
+        public virtual ICollection<Product> Products { get; set; }
+
+
     }
 }

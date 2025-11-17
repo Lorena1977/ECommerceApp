@@ -11,6 +11,7 @@ using ECOMMERCE.Models;
 
 namespace ECOMMERCE.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class UsersController : Controller
     {
         private ECommerceContext db = new ECommerceContext();
@@ -118,8 +119,21 @@ namespace ECOMMERCE.Controllers
                         user.Photo = pic;
                     }
                 }
+
+                var db2 = new ECommerceContext(); //Instacio el contexto para encontra el objeto viejo.
+                var currentUser = db2.Users.Find(user.UserId);
+
+                //Preguntamos si el correo es diferente al usuario si lo es lo actualizamos
+                if(currentUser.UserName != user.UserName)
+                {
+                    UserHelper.updateUserName(currentUser.UserName, user.UserName);
+                }
+
+                db2.Dispose(); //Desconectamos la base de datos.
+
+
                 db.Entry(user).State = EntityState.Modified;
-                db.SaveChanges();
+                db.SaveChanges();               
                 return RedirectToAction("Index");
             }
             ViewBag.CityId = new SelectList(ComboHelper.GetCities(), "CityId", "Name", user.CityId);
@@ -151,6 +165,7 @@ namespace ECOMMERCE.Controllers
             User user = db.Users.Find(id);
             db.Users.Remove(user);
             db.SaveChanges();
+            UserHelper.DeleteUser(user.UserName); //Para que borre el usuario de la base de datos.
             return RedirectToAction("Index");
         }
 

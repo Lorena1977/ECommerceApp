@@ -10,5 +10,6 @@ namespace ECOMMERCE
         {
             ConfigureAuth(app);
         }
+
     }
 }

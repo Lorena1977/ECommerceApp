@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
+using System.Web.Caching;
 using System.Web.Configuration;
 
 namespace ECOMMERCE.Clases
@@ -108,6 +109,35 @@ namespace ECOMMERCE.Clases
             await MailHelper.SendMail(email, subject, body);
         }
 
+        public static bool DeleteUser(string userName)
+        {
+            var userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(userContext));
+            var userASP = userManager.FindByEmail(userName); //Busca si existe el usuario 
+            if(userASP == null)
+            {
+                return false;
+            }
+            //Lo podemos borrar porque lo ha encontrado
+            userManager.Delete(userASP); //Devuelve un identityresult que lo almacenamos
+            var response = userManager.Delete(userASP);
+            return response.Succeeded; //devuelve verdadero si pudo borrar y falso si no.
+        }
+
+        //Método para actualizar el correo.
+        public static bool updateUserName(string currentUserName, string newUserName)
+        {
+            var userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(userContext));
+            var userASP = userManager.FindByEmail(currentUserName); //Busca si existe el usuario 
+            if (userASP == null)
+            {
+                return false;
+            }
+            userASP.UserName = newUserName; //Actualizamos el nombre de usuario
+            userASP.Email = newUserName; //Actualizamos el nuevo correo
+
+            var response = userManager.Update(userASP);
+            return response.Succeeded;
+        }
         public void Dispose()
         {
             userContext.Dispose();

@@ -12,23 +12,46 @@
 <body>
     <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark bg-dark">
         <div class="container">
-            @Html.ActionLink("Nombre de la aplicación", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+            @Html.ActionLink("E-Commerce", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
             <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" title="Alternar navegación" aria-controls="navbarSupportedContent"
                     aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse d-sm-inline-flex justify-content-between">
-                <ul class="navbar-nav flex-grow-1">
+                <ul class="navbar-nav flex-grow-1" style="font-weight:bold;">
                     <li>@Html.ActionLink("Inicio", "Index", "Home", new { area = "" }, new { @class = "nav-link" })</li>
                     <li>@Html.ActionLink("Acerca de", "About", "Home", new { area = "" }, new { @class = "nav-link" })</li>
                     <li>@Html.ActionLink("Contacto", "Contact", "Home", new { area = "" }, new { @class = "nav-link" })</li>
-                    <li>@Html.ActionLink("Departments", "Index", "Departments", new { area = "" }, new { @class = "nav-link" })</li>
-                    <li>@Html.ActionLink("Cities", "Index", "Cities", new { area = "" }, new { @class = "nav-link" })</li>
-                    <li>@Html.ActionLink("Companies", "Index", "Companies", new { area = "" }, new { @class = "nav-link" })</li>
-                    <li>@Html.ActionLink("Users", "Index", "Users", new { area = "" }, new { @class = "nav-link" })</li>
 
+                    @if (User.IsInRole("Admin"))
+                    {
+                        <li class="nav-item dropdown">
+                            <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                                Admin
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li>@Html.ActionLink("Cities", "Index", "Cities", null, new { @class = "dropdown-item" })</li>
+                                <li>@Html.ActionLink("Companies", "Index", "Companies", null, new { @class = "dropdown-item" })</li>
+                                <li>@Html.ActionLink("Departments", "Index", "Departments", null, new { @class = "dropdown-item" })</li>
+                                <li>@Html.ActionLink("Users", "Index", "Users", null, new { @class = "dropdown-item" })</li>
+                            </ul>
+                        </li>
+                    }
+                    @if (User.IsInRole("User"))
+                    {
+                        <li class="nav-item dropdown">
+                            <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                                File
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li>@Html.ActionLink("Categories", "Index", "Categories", null, new { @class = "dropdown-item" })</li>
+                                <li>@Html.ActionLink("Products", "Index", "Products", null, new { @class = "dropdown-item" })</li>
+                                <li>@Html.ActionLink("Taxes", "Index", "Taxes", null, new { @class = "dropdown-item" })</li>
+                            </ul>
+                        </li>
+                    }
                 </ul>
-                 @Html.Partial("_LoginPartial")
+                @Html.Partial("_LoginPartial")
             </div>
         </div>
     </nav>
@@ -36,12 +59,15 @@
         @RenderBody()
         <hr />
         <footer>
-            <p>&copy; @DateTime.Now.Year - Mi aplicación ASP.NET</p>
+            <p>&copy; @DateTime.Now.Year - By -LGM</p>
         </footer>
     </div>
 
+
     @Scripts.Render("~/bundles/jquery")
-    @Scripts.Render("~/bundles/bootstrap")
+
+    @Scripts.Render("~/bundles/jqueryval")  <!-- AÑADIR ESTA LÍNEA -->
+    <script src="~/Scripts/bootstrap.bundle.min.js"></script>
     @RenderSection("scripts", required: false)
 </body>
 </html>

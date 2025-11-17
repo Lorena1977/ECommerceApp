@@ -10,6 +10,7 @@ using ECOMMERCE.Models;
 
 namespace ECOMMERCE.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class DepartmentsController : Controller
     {
         private ECommerceContext db = new ECommerceContext(); //db es un objeto del contexto (con esto nos conectamos a la BD).
